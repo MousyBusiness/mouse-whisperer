@@ -1,0 +1,480 @@
+# ============================================================================
+# TEXT COMMANDS - Text input and manipulation
+# ============================================================================
+[commands.text]
+[commands.text.fast]
+triggers = ["fast"]
+description = "Quickly type text with short break detection"
+actions = [
+  { method = "type_str", args = { prompt = "A word or sentence. output: ", break = "500ms", timeout = "2s" } },
+]
+
+[commands.text.prose]
+triggers = ["prose", "pros"]
+description = "Type longer text with longer break detection"
+actions = [
+  { method = "type_str", args = { prompt = "A word or sentence. output: ", break = "2s", timeout = "5s" , voice_model = "accurate" } },
+]
+
+[commands.text.spell]
+triggers = ["spell"]
+description = "Spell out a word letter by letter (e.g., say 'a t t' to type 'att')"
+actions = [
+  { method = "type_str", args = { prompt = "Spell out a word one character at a time (a-z, A-Z, 0-9 only). output: ", break = "2s", timeout = "5s", voice_model = "accurate", only_alphanumeric = true, no_spaces = true } },
+]
+
+[commands.text.type]
+triggers = ["type"]
+description = "Type a word or sentence - doen't wait for input if no trailer"
+actions = [{ method = "type_str", requires_trailer = true }]
+
+[commands.text.scratch]
+triggers = ["scratch that"]
+description = "Remove the last dictated utterance from the dictation buffer"
+states = ["dictating"]
+actions = [{ method = "dictation_scratch" }]
+
+[commands.text.sentence]
+triggers = ["sentence"]
+description = "End sentence with '. ' then continue dictating"
+actions = [
+  { method = "type_str", args = { text = ". " } },
+  { method = "type_str", args = { prompt = "A word or sentence. output: ", break = "2s", timeout = "5s", voice_model = "accurate" } },
+]
+
+[commands.text.pause]
+triggers = ["pause"]
+description = "Pause sentence with ', ' then continue dictating"
+actions = [
+  { method = "type_str", args = { text = ", " } },
+  { method = "type_str", args = { prompt = "A word or sentence. output: ", break = "2s", timeout = "5s", voice_model = "accurate" } },
+]
+
+[commands.text.number]
+triggers = ["number"]
+description = "Type a number (e.g., say 'one two three' to type '123')"
+actions = [{ method = "type_num", args = { break = "1s", timeout = "5s" } }]
+
+[commands.text.cap_that]
+triggers = ["title that"]
+description = "Capitalize first letter of selected text; while dictating, capitalize the buffer's first letter"
+actions = [
+  { id = "buffer", method = "dictation_case", args = { case = "upper" }, states = [
+    "dictating",
+  ] },
+  { id = "selection", method = "text_title_that", excludes = [
+    "dictating",
+  ] },
+]
+action_callbacks = [
+  { for = "buffer", result = "skip", method = "__continue__" },
+  { for = "buffer", result = "success", method = "__done__" },
+  { for = "selection", result = "skip", method = "__continue__" },
+]
+
+[commands.text.lowercase_that]
+triggers = ["lowercase that"]
+description = "Convert selected text to lowercase; while dictating, lowercase the buffer's first letter"
+actions = [
+  { id = "buffer", method = "dictation_case", args = { case = "lower" }, states = [
+    "dictating",
+  ] },
+  { id = "selection", method = "text_lowercase_that", excludes = [
+    "dictating",
+  ] },
+]
+action_callbacks = [
+  { for = "buffer", result = "skip", method = "__continue__" },
+  { for = "buffer", result = "success", method = "__done__" },
+  { for = "selection", result = "skip", method = "__continue__" },
+]
+
+[commands.text.uppercase_that]
+triggers = ["uppercase that"]
+description = "Convert selected text to UPPERCASE"
+actions = [{ method = "text_uppercase_that" }]
+
+[commands.text.kebab_that]
+triggers = ["kebab that", "kebab case that"]
+description = "Convert selected text to kebab-case"
+actions = [{ method = "text_kebab_that" }]
+
+[commands.text.snake_that]
+triggers = ["snake that", "snake case that"]
+description = "Convert selected text to snake_case"
+actions = [{ method = "text_snake_that" }]
+
+[commands.text.camel_that]
+triggers = ["camel that", "camel case that"]
+description = "Convert selected text to camelCase"
+actions = [{ method = "text_camel_that" }]
+
+[commands.text.pascal_that]
+triggers = ["pascal that", "pascal case that"]
+description = "Convert selected text to PascalCase"
+actions = [{ method = "text_pascal_that" }]
+
+[commands.text.word]
+triggers = ["word"]
+description = "Select next word (Shift+Alt+Right)"
+actions = [
+  { method = "keybd_event", args = { key = "VK_RIGHT", modifiers = [
+    "shift",
+    "alt",
+  ] } },
+]
+
+[commands.text.select_all]
+triggers = ["select all"]
+description = "Select all (Cmd+A)"
+actions = [
+  { method = "keybd_event", args = { key = "VK_A", modifiers = [
+    "cmd",
+  ] } },
+]
+
+
+[commands.text.select_up]
+triggers = ["select up"]
+description = "Extend selection up by one line"
+multiplier = true
+actions = [
+  { method = "keybd_event", args = { key = "VK_UP", modifiers = [
+    "shift",
+  ] } },
+]
+
+[commands.text.select_down]
+triggers = ["select down"]
+description = "Extend selection down by one line"
+multiplier = true
+actions = [
+  { method = "keybd_event", args = { key = "VK_DOWN", modifiers = [
+    "shift",
+  ] } },
+]
+
+[commands.text.select_left]
+triggers = ["select left"]
+description = "Extend selection left by one character"
+multiplier = true
+actions = [
+  { method = "keybd_event", args = { key = "VK_LEFT", modifiers = [
+    "shift",
+  ] } },
+]
+
+[commands.text.select_right]
+triggers = ["select right"]
+description = "Extend selection right by one character"
+multiplier = true
+actions = [
+  { method = "keybd_event", args = { key = "VK_RIGHT", modifiers = [
+    "shift",
+  ] } },
+]
+
+[commands.text.select_end]
+triggers = ["select end"]
+description = "Select from cursor to end of line"
+actions = [
+  { method = "keybd_event", args = { key = "VK_RIGHT", modifiers = [
+    "shift",
+    "cmd",
+  ] } },
+]
+
+[commands.text.select_start]
+triggers = ["select start"]
+description = "Select from cursor to start of line"
+actions = [
+  { method = "keybd_event", args = { key = "VK_LEFT", modifiers = [
+    "shift",
+    "cmd",
+  ] } },
+]
+
+# bare "select" now lives in mouse.select_complex, which falls back to these
+# same keystrokes when no target text follows it
+[commands.text.select]
+triggers = ["select word"]
+description = "Select the word under cursor"
+actions = [
+  { method = "keybd_event", args = { key = "VK_LEFT", modifiers = [
+    "alt",
+  ] } },
+  { method = "keybd_event", args = { key = "VK_RIGHT", modifiers = [
+    "shift",
+    "alt",
+  ] } },
+]
+
+[commands.text.select_line]
+triggers = ["select line"]
+description = "Select the entire current line"
+actions = [
+  { method = "keybd_event", args = { key = "VK_LEFT", modifiers = [
+    "cmd",
+  ] } },
+  { method = "keybd_event", args = { key = "VK_RIGHT", modifiers = [
+    "cmd",
+    "shift",
+  ] } },
+]
+
+[commands.text.select_left_word]
+triggers = ["select left word"]
+description = "Extend selection left by one word"
+multiplier = true
+actions = [
+  { method = "keybd_event", args = { key = "VK_LEFT", modifiers = [
+    "alt",
+    "shift",
+  ] } },
+]
+
+[commands.text.select_right_word]
+triggers = ["select right word"]
+description = "Extend selection right by one word"
+multiplier = true
+actions = [
+  { method = "keybd_event", args = { key = "VK_RIGHT", modifiers = [
+    "alt",
+    "shift",
+  ] } },
+]
+
+[commands.text.force_delete_that]
+triggers = ["force delete that"]
+description = "Force delete character before cursor (Backspace)"
+disable_fuzzy = true
+multiplier = false
+actions = [
+  { method = "keybd_event", args = { key = "VK_DELETE", modifiers = [
+    "cmd",
+  ] } },
+]
+
+[commands.text.delete_that]
+triggers = ["delete that"]
+description = "Delete character(s) before cursor; while dictating, delete character(s) from the end of the buffer"
+disable_fuzzy = true
+multiplier = true
+actions = [
+  { id = "buffer", method = "dictation_delete_char", states = [
+    "dictating",
+  ] },
+  { id = "keys", method = "keybd_event", args = { key = "VK_DELETE" }, excludes = [
+    "dictating",
+  ] },
+]
+action_callbacks = [
+  { for = "buffer", result = "skip", method = "__continue__" },
+  { for = "buffer", result = "success", method = "__done__" },
+  { for = "keys", result = "skip", method = "__continue__" },
+]
+
+[commands.text.delete_word]
+triggers = ["delete word"]
+description = "Delete word before cursor; while dictating, remove the last word(s) from the buffer"
+disable_fuzzy = true
+multiplier = true
+actions = [
+  { id = "buffer", method = "dictation_delete_word", states = [
+    "dictating",
+  ] },
+  { id = "keys", method = "keybd_event", args = { key = "VK_DELETE", modifiers = [
+    "alt",
+  ] }, excludes = [
+    "dictating",
+  ] },
+]
+action_callbacks = [
+  { for = "buffer", result = "skip", method = "__continue__" },
+  { for = "buffer", result = "success", method = "__done__" },
+  { for = "keys", result = "skip", method = "__continue__" },
+]
+
+[commands.text.tidy]
+triggers = ["tidy that", "tidy"]
+description = "Reflow the dictation buffer into cohesive prose (removes pause punctuation)"
+states = ["dictating"]
+actions = [
+  { method = "dictation_tidy", args = { model = "gemma3:4b" } },
+]
+
+[commands.text.replay]
+triggers = ["replay that", "replay"]
+description = "Re-transcribe the dictation buffer from its recordings as one clip (whole sentences, accurate model)"
+disable_fuzzy = true
+states = ["dictating"]
+actions = [
+  { method = "dictation_replay" },
+]
+
+[commands.text.question]
+triggers = ["question that"]
+description = "End the dictation buffer with a question mark"
+disable_fuzzy = true
+states = ["dictating"]
+actions = [
+  { method = "dictation_punct", args = { mark = "?" } },
+]
+
+[commands.text.revise]
+triggers = ["fix that", "adjust that"]
+description = "Revise the dictation buffer per a spoken instruction, e.g. 'fix that I meant privacy not piracy'"
+disable_fuzzy = true
+states = ["dictating"]
+actions = [
+  { method = "dictation_revise", args = { model = "llama3.1:latest" } },
+]
+
+[commands.text.send_it]
+triggers = ["send it", "send that"]
+description = "Insert the dictation buffer at the cursor and press Enter (submit)"
+disable_fuzzy = true
+states = ["dictating"]
+actions = [{ method = "dictation_yolo" }]
+
+[commands.text.delete_line]
+triggers = ["delete line"]
+description = "Delete entire current line"
+disable_fuzzy = true
+actions = [
+  { method = "keybd_event", args = { key = "VK_LEFT", modifiers = [
+    "cmd",
+  ] } },
+  { method = "keybd_event", args = { key = "VK_RIGHT", modifiers = [
+    "cmd",
+    "shift",
+  ] } },
+  { method = "keybd_event", args = { key = "VK_DELETE" } },
+]
+
+[commands.text.cut_that]
+triggers = ["cut that"]
+description = "Cut selection to clipboard (Cmd+X)"
+multiplier = true
+disable_fuzzy = true
+actions = [{ method = "robotgo", args = { key = "x", modifiers = ["cmd"] } }]
+
+[commands.text.copy_that]
+triggers = ["copy", "copy that"]
+description = "Copy selection to clipboard (Cmd+C)"
+actions = [{ method = "robotgo", args = { key = "c", modifiers = ["cmd"] } }]
+
+[commands.text.paste_that]
+triggers = ["paste", "paste that"]
+description = "Paste from clipboard (Cmd+V)"
+actions = [{ method = "robotgo", args = { key = "v", modifiers = ["cmd"] } }]
+
+[commands.text.tab]
+triggers = ["tab"]
+description = "Insert tab character or indent"
+actions = [{ method = "robotgo", args = { key = "tab" } }]
+
+[commands.text.space]
+triggers = ["space"]
+description = "Insert space character"
+actions = [{ method = "robotgo", args = { key = "space" } }]
+
+[commands.text.enter]
+triggers = ["enter that", "submit", "enter"]
+description = "Press Enter/Return key"
+multiplier = true
+actions = [{ method = "robotgo", args = { key = "enter" } }]
+
+[commands.text.shift_enter]
+triggers = ["shift enter", "new line"]
+description = "Press Shift+Enter (new line without submit)"
+actions = [
+  { method = "robotgo", args = { key = "enter", modifiers = [
+    "shift",
+  ] } },
+]
+
+[commands.text.command_enter]
+triggers = ["command enter"]
+description = "Press Cmd+Enter (submit in some apps)"
+actions = [
+  { method = "robotgo", args = { key = "enter", modifiers = [
+    "cmd",
+  ] } },
+]
+
+[commands.text.escape]
+triggers = ["escape"]
+description = "Press Escape key to cancel/dismiss"
+actions = [{ method = "robotgo", args = { key = "esc" } }]
+
+[commands.text.up]
+triggers = ["up"]
+description = "Move cursor up one line"
+multiplier = true
+actions = [{ method = "keybd_event", args = { key = "VK_UP" } }]
+
+[commands.text.down]
+triggers = ["down"]
+description = "Move cursor down one line"
+multiplier = true
+actions = [{ method = "keybd_event", args = { key = "VK_DOWN" } }]
+
+[commands.text.left]
+triggers = ["left"]
+description = "Move cursor left one character"
+multiplier = true
+actions = [{ method = "keybd_event", args = { key = "VK_LEFT" } }]
+
+[commands.text.right]
+triggers = ["right"]
+description = "Move cursor right one character"
+multiplier = true
+actions = [{ method = "keybd_event", args = { key = "VK_RIGHT" } }]
+
+[commands.text.left_word]
+triggers = ["left word"]
+description = "Move cursor left by one word"
+multiplier = true
+actions = [
+  { method = "keybd_event", args = { key = "VK_LEFT", modifiers = [
+    "alt",
+  ] } },
+]
+
+[commands.text.right_word]
+triggers = ["right word"]
+description = "Move cursor right by one word"
+multiplier = true
+actions = [
+  { method = "keybd_event", args = { key = "VK_RIGHT", modifiers = [
+    "alt",
+  ] } },
+]
+
+[commands.text.bold_that]
+triggers = ["bold that"]
+description = "Apply bold formatting (Cmd+B)"
+actions = [
+  { method = "keybd_event", args = { key = "VK_B", modifiers = [
+    "cmd",
+  ] } },
+]
+
+[commands.text.italics_that]
+triggers = ["italics that"]
+description = "Apply italic formatting (Cmd+I)"
+actions = [
+  { method = "keybd_event", args = { key = "VK_I", modifiers = [
+    "cmd",
+  ] } },
+]
+
+[commands.text.bracket_that]
+triggers = ["bracket that"]
+description = "Insert opening parenthesis ("
+actions = [
+  { method = "keybd_event", args = { key = "VK_9", modifiers = [
+    "shift",
+  ] } },
+]

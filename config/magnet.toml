@@ -1,0 +1,143 @@
+# ============================================================================
+# MAGNET/SNAPPING COMMANDS - Window snapping (requires Magnet app)
+# ============================================================================
+[commands.magnet]
+[commands.magnet.large_left]
+triggers = ["magnet large left", "magnet left large"]
+description = "Snap window to left 2/3 of screen"
+actions = [
+  { method = "osascript", args = { key_code = 14, modifiers = [
+    "control",
+    "option",
+  ] } },
+]
+
+[commands.magnet.large_right]
+triggers = ["magnet large right", "magnet right large"]
+description = "Snap window to right 2/3 of screen"
+actions = [
+  { method = "osascript", args = { key_code = 17, modifiers = [
+    "control",
+    "option",
+  ] } },
+]
+
+[commands.magnet.left]
+triggers = ["magnet left"]
+description = "Snap window to left half of screen"
+actions = [
+  { method = "osascript", args = { key_code = 123, modifiers = [
+    "control",
+    "option",
+  ] } },
+]
+
+[commands.magnet.right]
+triggers = ["magnet right"]
+description = "Snap window to right half of screen"
+actions = [
+  { method = "osascript", args = { key_code = 124, modifiers = [
+    "control",
+    "option",
+  ] } },
+]
+
+[commands.magnet.top]
+triggers = ["magnet top"]
+description = "Snap window to top half of screen"
+actions = [
+  { method = "osascript", args = { key_code = 126, modifiers = [
+    "control",
+    "option",
+  ] } },
+]
+
+[commands.magnet.bottom]
+triggers = ["magnet bottom"]
+description = "Snap window to bottom half of screen"
+actions = [
+  { method = "osascript", args = { key_code = 125, modifiers = [
+    "control",
+    "option",
+  ] } },
+]
+
+[commands.magnet.third_left]
+triggers = ["magnet third left", "magnet left third"]
+description = "Snap window to left 1/3 of screen"
+actions = [
+  { method = "osascript", args = { key_code = 2, modifiers = [
+    "control",
+    "option",
+  ] } },
+]
+
+[commands.magnet.third_middle]
+triggers = ["magnet third middle", "magnet middle third"]
+description = "Snap window to center 1/3 of screen"
+actions = [
+  { method = "osascript", args = { key_code = 3, modifiers = [
+    "control",
+    "option",
+  ] } },
+]
+
+[commands.magnet.third_right]
+triggers = ["magnet third right", "magnet right third"]
+description = "Snap window to right 1/3 of screen"
+actions = [
+  { method = "osascript", args = { key_code = 5, modifiers = [
+    "control",
+    "option",
+  ] } },
+]
+
+[commands.magnet.top_left]
+triggers = ["magnet top left", "magnet left top"]
+description = "Snap window to top-left quarter"
+actions = [
+  { method = "osascript", args = { key_code = 32, modifiers = [
+    "control",
+    "option",
+  ] } },
+]
+
+[commands.magnet.top_right]
+triggers = ["magnet top right", "magnet right top"]
+description = "Snap window to top-right quarter"
+actions = [
+  { method = "osascript", args = { key_code = 34, modifiers = [
+    "control",
+    "option",
+  ] } },
+]
+
+[commands.magnet.bottom_left]
+triggers = ["magnet bottom left", "magnet left bottom"]
+description = "Snap window to bottom-left quarter"
+actions = [
+  { method = "osascript", args = { key_code = 38, modifiers = [
+    "control",
+    "option",
+  ] } },
+]
+
+[commands.magnet.bottom_right]
+triggers = ["magnet bottom right", "magnet right bottom"]
+description = "Snap window to bottom-right quarter"
+actions = [
+  { method = "osascript", args = { key_code = 40, modifiers = [
+    "control",
+    "option",
+  ] } },
+]
+
+[commands.magnet.fullscreen]
+triggers = ["magnet fullscreen", "magnet max", "magnet full"]
+description = "Maximize window to fill entire screen"
+actions = [
+  { method = "osascript", args = { key_code = 36, modifiers = [
+    "control",
+    "option",
+  ] } },
+]

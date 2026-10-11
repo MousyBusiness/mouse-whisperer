@@ -1,0 +1,57 @@
+# ============================================================================
+# AI COMMANDS - AI-assisted coding
+# Run `ollama run codellama:7b-instruct` first
+# mixtral:8x7b
+# gemma3:1b
+# gemma3:4b
+# gemma3:12b
+# ============================================================================
+
+[commands.ai]
+[commands.ai.go]
+triggers = ["ai go"]
+description = "Generate code with AI and display in overlay for review"
+actions = [
+  { method = "ai_ollama", args = { model = "codellama:7b-instruct", prompt = "An instruction to generate software code, output: ", break = "2s", timeout = "5s", ai_prompt = "RESPOND ONLY WITH CODE, output in Go exactly as spoken without additional context", voice_model = "accurate" } },
+]
+
+[commands.ai.instruct]
+triggers = ["ai instruct"]
+description = "Generate code with AI based on instruction"
+actions = [
+  { method = "ai_ollama", args = { model = "codellama:7b-instruct", prompt = "An instruction to generate software code, output: ", break = "2s", timeout = "5s", ai_prompt = "RESPOND ONLY WITH CODE", voice_model = "accurate" } },
+]
+
+[commands.ai.terminal]
+triggers = ["ai terminal"]
+description = "Generate a terminal command (make, go, cd, git, etc.) from description"
+actions = [
+  { method = "ai_ollama", args = { model = "codellama:7b-instruct", prompt = "A terminal command description, output: ", break = "2s", timeout = "5s", ai_prompt = "RESPOND ONLY WITH A SINGLE TERMINAL COMMAND (e.g. make, go, cd, git, npm), no explanation", voice_model = "accurate" } },
+]
+
+
+
+[commands.ai.change_directory]
+triggers = ["change directory"]
+description = "Change directory"
+actions = [{ method = "ai_ollama", args = { model = "gemma3:4b", prompt = "A relative or absolute directory path. output: ", break = "1s", timeout = "3s", ai_prompt = """
+Inputs will dictate a relative or absolute path navigation which should be converted into a cd command. Inputs may contain transcription mistakes e.g. go back to directories -> go back two directories.
+When 'home' is mentioned use the tilda symbol. When 'root' is mentioned, start with a /.
+RESPOND ONLY WITH A CD TERMINAL COMMAND, no explanation.""", voice_model = "accurate" } }]
+
+
+[commands.ai.clip]
+triggers = ["clipboard", "take"]
+description = "Copy AI-generated code to clipboard"
+actions = [{ method = "ai_clip" }]
+
+[commands.ai.accept]
+triggers = ["insert"]
+disable_fuzzy = true
+description = "Accept and insert AI-generated code at cursor"
+actions = [{ method = "ai_accept" }]
+
+[commands.ai.reject]
+triggers = ["reject"]
+description = "Dismiss AI-generated code suggestion"
+actions = [{ method = "ai_reject" }]

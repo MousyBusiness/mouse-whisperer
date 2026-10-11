@@ -1,0 +1,94 @@
+syntax = "proto3";
+
+package mouse_whisperer.overlay.v1;
+
+// DisplayMessage is sent to show text content in the UI
+message DisplayMessage {
+  oneof content {
+    // Brief command text shown at bottom of screen (auto-dismiss ~1s)
+    string command_text = 1;
+    // Commands list panel shown on the right (auto-dismiss ~15s, tap to close)
+    CommandsList commands_list = 2;
+    // Command config/spec panel (auto-dismiss ~20s, tap to close)
+    CommandConfig command_config = 3;
+  }
+}
+
+message CommandsList {
+  string title = 1;
+  repeated string items = 2;
+  int32 dismiss_seconds = 3; // 0 = default (15s)
+}
+
+message CommandConfig {
+  string name = 1;
+  string description = 2;
+  repeated string triggers = 3;
+  int32 dismiss_seconds = 4; // 0 = default (20s)
+}
+
+message Toast {
+  string title = 1;
+  string message = 2;
+  string level = 3; // "error", "warn", "info"
+}
+
+message EyesPosition {
+  double x = 1;
+  double y = 2;
+  bool clear = 3; // true to clear the position
+}
+
+message Image {
+  string image_base64 = 1;
+  bool delete = 2;
+}
+
+message AIResponse {
+  string prompt = 1;
+  string ai_response = 2;
+  bool delete = 3;
+}
+
+// UIAction is sent to perform actions on the UI (scroll, dismiss, etc.)
+message UIAction {
+  string action = 1; // "scroll_down", "scroll_up", "dismiss"
+  int32 amount = 2; // scroll amount in pixels (optional)
+}
+
+// TunnelVision darkens the screen except for a circle around the eye position
+message TunnelVision {
+  bool enabled = 1;
+  int32 radius = 2; // default 600px
+  double opacity = 3; // background darkness 0.0-1.0, default 0.85
+  double blend_distance = 4; // gradient blend ratio 0.0-1.0, default 0.5
+}
+
+// GhostVisibility controls whether the ghost cursor indicator is shown
+message GhostVisibility {
+  bool visible = 1;
+}
+
+// RecordingIndicator shows when voice input is being awaited
+message RecordingIndicator {
+  bool recording = 1;
+  int32 timeout_ms = 2; // recording timeout in milliseconds
+}
+
+// MouseDownIndicator shows when the mouse button is being held down
+message MouseDownIndicator {
+  bool active = 1;
+}
+
+// NotListeningIndicator shows when voice input is explicitly disabled
+message NotListeningIndicator {
+  bool enabled = 1;
+}
+
+// Dictation shows the live prose buffer while dictating
+message Dictation {
+  string text = 1;    // committed buffer (joined utterances)
+  string pending = 2; // in-flight utterance, shown dimmed, updated per tick
+  bool delete = 3;
+  repeated string hints = 4; // spoken control commands available right now
+}

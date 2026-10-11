@@ -1,0 +1,64 @@
+# ============================================================================
+# WORKSPACE COMMANDS - Mission Control space aliases and switching
+# ============================================================================
+# Requires build/space-helper (make space-helper). Aliases are in-memory and
+# reset when the app restarts.
+[commands.workspace]
+[commands.workspace.alias]
+triggers = ["alias workspace", "name workspace"]
+description = "Alias the current space (e.g. 'alias workspace whatsapp')"
+actions = [
+  { method = "workspace_alias", args = { prompt = "A workspace name e.g. whatsapp, work, private. output: ", break = "750ms", timeout = "4s" } },
+]
+
+[commands.workspace.goto]
+triggers = ["go to", "goto"]
+description = "Switch to an aliased space (e.g. 'go to whatsapp')"
+actions = [
+  { method = "workspace_goto", args = { prompt = "An aliased workspace name. output: ", break = "750ms", timeout = "4s" } },
+]
+
+[commands.workspace.screen_one]
+triggers = ["screen 1"]
+description = "Switch to screen 1"
+actions = [{ method = "workspace_goto_index", args = { index = 1 } }]
+
+[commands.workspace.screen_two]
+triggers = ["screen 2"]
+description = "Switch to screen 2"
+actions = [{ method = "workspace_goto_index", args = { index = 2 } }]
+
+[commands.workspace.screen_three]
+triggers = ["screen 3"]
+description = "Switch to screen 3"
+actions = [{ method = "workspace_goto_index", args = { index = 3 } }]
+
+[commands.workspace.screen_four]
+triggers = ["screen 4"]
+description = "Switch to screen 4"
+actions = [{ method = "workspace_goto_index", args = { index = 4 } }]
+
+[commands.workspace.screen_five]
+triggers = ["screen 5"]
+description = "Switch to screen 5"
+actions = [{ method = "workspace_goto_index", args = { index = 5 } }]
+
+[commands.workspace.screen_six]
+triggers = ["screen 6"]
+description = "Switch to screen 6"
+actions = [{ method = "workspace_goto_index", args = { index = 6 } }]
+
+[commands.workspace.screen_seven]
+triggers = ["screen 7"]
+description = "Switch to screen 7"
+actions = [{ method = "workspace_goto_index", args = { index = 7 } }]
+
+[commands.workspace.screen_eight]
+triggers = ["screen 8"]
+description = "Switch to screen 8"
+actions = [{ method = "workspace_goto_index", args = { index = 8 } }]
+
+[commands.workspace.screen_nine]
+triggers = ["screen 9"]
+description = "Switch to screen 9"
+actions = [{ method = "workspace_goto_index", args = { index = 9 } }]

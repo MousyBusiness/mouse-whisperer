@@ -1,0 +1,72 @@
+# ============================================================================
+# AGENT COMMANDS - Claude Code CLI slash commands and shortcuts
+# (Trigger word is "agent" — "claude" doesn't transcribe reliably.)
+# ============================================================================
+
+[commands.agent]
+
+[commands.agent.clear]
+triggers = ["agent clear"]
+description = "Run /clear in Claude Code and submit"
+actions = [
+  { method = "type_str", args = { text = "/clear" } },
+  { method = "robotgo", args = { key = "enter" }, sleep = 100 },
+]
+
+[commands.agent.toggle]
+triggers = ["agent toggle", "agent mode"]
+description = "Toggle Claude Code modes (Shift+Tab)"
+actions = [
+  { method = "robotgo", args = { key = "tab", modifiers = [
+    "shift",
+  ] } },
+]
+
+[commands.agent.line]
+triggers = ["agent line"]
+description = "Insert newline in Claude Code input (Shift+Enter)"
+actions = [
+  { method = "robotgo", args = { key = "enter", modifiers = [
+    "shift",
+  ] } },
+]
+
+[commands.agent.compact]
+triggers = ["agent compact"]
+description = "Run /compact in Claude Code and submit"
+actions = [
+  { method = "type_str", args = { text = "/compact" } },
+  { method = "robotgo", args = { key = "enter" }, sleep = 100 },
+]
+
+[commands.agent.help]
+triggers = ["agent help"]
+description = "Run /help in Claude Code and submit"
+actions = [
+  { method = "type_str", args = { text = "/help" } },
+  { method = "robotgo", args = { key = "enter" }, sleep = 100 },
+]
+
+[commands.agent.model]
+triggers = ["agent model"]
+description = "Run /model in Claude Code and submit"
+actions = [
+  { method = "type_str", args = { text = "/model" } },
+  { method = "robotgo", args = { key = "enter" }, sleep = 100 },
+]
+
+[commands.agent.resume]
+triggers = ["agent resume"]
+description = "Run /resume in Claude Code and submit"
+actions = [
+  { method = "type_str", args = { text = "/resume" } },
+  { method = "robotgo", args = { key = "enter" }, sleep = 100 },
+]
+
+[commands.agent.review]
+triggers = ["agent review"]
+description = "Run /review in Claude Code and submit"
+actions = [
+  { method = "type_str", args = { text = "/review" } },
+  { method = "robotgo", args = { key = "enter" }, sleep = 100 },
+]

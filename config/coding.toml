@@ -1,0 +1,112 @@
+# ============================================================================
+# CODING COMMANDS - IDE and programming related
+# ============================================================================
+[commands.coding]
+[commands.coding.line]
+triggers = ["line"]
+description = "Go to a specific line number in the current file"
+actions = [
+  { method = "keybd_event", args = { key = "VK_L", modifiers = [
+    "cmd",
+  ] } },
+  { method = "type_num", sleep = 200 },
+  { method = "keybd_event", args = { key = "VK_ENTER" } },
+]
+
+[commands.coding.pascal]
+triggers = ["pascal"]
+description = "Generate a PascalCase variable name from spoken words"
+actions = [
+  { method = "type_str", args = { prompt = "A space separated coding variable name. output: ", break = "1s", timeout = "5s", pascal = true } },
+]
+
+[commands.coding.camel]
+triggers = ["camel"]
+description = "Generate a camelCase variable name from spoken words"
+actions = [
+  { method = "type_str", args = { prompt = "A space separated coding variable name. output: ", break = "1s", timeout = "5s", camel = true } },
+]
+
+[commands.coding.snake]
+triggers = ["snake"]
+description = "Generate a snake_case variable name from spoken words"
+actions = [
+  { method = "type_str", args = { prompt = "A space separated coding variable name. output: ", break = "1s", timeout = "5s", snake = true } },
+]
+
+[commands.coding.kebab]
+triggers = ["kebab"]
+description = "Generate a kebab-case variable name from spoken words"
+actions = [
+  { method = "type_str", args = { prompt = "A space separated coding variable name. output: ", break = "1s", timeout = "5s", kebab = true } },
+]
+
+[commands.coding.lower]
+triggers = ["lower"]
+description = "Generate a lowercase variable name from spoken words"
+actions = [
+  { method = "type_str", args = { prompt = "A space separated coding variable name. output: ", break = "1s", timeout = "5s", lower = true } },
+]
+
+[commands.coding.upper]
+triggers = ["upper"]
+description = "Generate a uppercase variable name from spoken words"
+actions = [
+  { method = "type_str", args = { prompt = "A space separated coding variable name. output: ", break = "1s", timeout = "5s", upper = true } },
+]
+
+[commands.coding.title]
+triggers = ["title"]
+description = "Generate a title case variable name from spoken words"
+actions = [
+  { method = "type_str", args = { prompt = "A space separated coding variable name. output: ", break = "1s", timeout = "5s", title = true } },
+]
+
+[commands.coding.undo]
+triggers = ["undo"]
+description = "Undo the last action (Cmd+Z); while dictating, revert the last buffer change"
+actions = [
+  { id = "buffer", method = "dictation_undo", states = [
+    "dictating",
+  ] },
+  { id = "keys", method = "keybd_event", args = { key = "VK_Z", modifiers = [
+    "cmd",
+  ] }, excludes = [
+    "dictating",
+  ] },
+]
+action_callbacks = [
+  { for = "buffer", result = "skip", method = "__continue__" },
+  { for = "buffer", result = "success", method = "__done__" },
+  { for = "keys", result = "skip", method = "__continue__" },
+]
+
+[commands.coding.redo]
+triggers = ["redo"]
+description = "Redo the last undone action (Cmd+Shift+Z); while dictating, re-apply an undone buffer change"
+actions = [
+  { id = "buffer", method = "dictation_redo", states = [
+    "dictating",
+  ] },
+  { id = "keys", method = "keybd_event", args = { key = "VK_Z", modifiers = [
+    "cmd",
+    "shift",
+  ] }, excludes = [
+    "dictating",
+  ] },
+]
+action_callbacks = [
+  { for = "buffer", result = "skip", method = "__continue__" },
+  { for = "buffer", result = "success", method = "__done__" },
+  { for = "keys", result = "skip", method = "__continue__" },
+]
+
+[commands.coding.comment]
+triggers = ["comment"]
+description = "Toggle comment on the current line or selection (Cmd+/)"
+actions = [
+  { method = "keybd_event", args = { key = "VK_SLASH", modifiers = [
+    "cmd",
+  ] } },
+]
+

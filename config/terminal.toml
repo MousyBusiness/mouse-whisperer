@@ -1,0 +1,27 @@
+[commands.terminal.kill_process]
+triggers = ["kill process"]
+description = "Send Ctrl+C to terminate the current process"
+actions = [
+  { method = "keybd_event", args = { key = "VK_C", modifiers = [
+    "ctrl",
+  ] } },
+]
+
+[commands.terminal.find]
+triggers = ["terminal find", "terminal search"]
+description = "Search terminal history"
+actions = [
+  { method = "keybd_event", args = { key = "VK_R", modifiers = [
+    "ctrl",
+  ] } },
+]
+
+[commands.terminal.history]
+triggers = ["terminal history"]
+description = "Show terminal history"
+actions = [{ method = "type_str", args = { text = "history" } }]
+
+[commands.terminal.clear]
+triggers = ["terminal clear"]
+description = "Clear terminal screen"
+actions = [{ method = "type_str", args = { text = "clear" } }]

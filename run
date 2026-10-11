@@ -1,0 +1,154 @@
+#!/usr/bin/env bash
+
+DIR=$(dirname $0)
+DEVELOP="false"
+OVERLAY="true"
+DEBUG_FLAGS=()
+
+set -eo pipefail
+
+while [[ -n "$1" ]]; do
+  case $1 in
+  --dev)
+    DEVELOP="true"
+    ;;
+  --no-overlay)
+    OVERLAY="false"
+    ;;
+  --debug)
+    DEBUG_FLAGS=(-debug)
+    ;;
+  *)
+    echo "unexpected arg" && exit 1
+    ;;
+  esac
+  shift
+done
+
+cleanup() {
+    echo "Cleaning up..."
+    
+    # Kill all background processes
+    [[ -n "$SERVER_TINY_PID" ]] && kill $SERVER_TINY_PID 2>/dev/null || true
+    [[ -n "$SERVER_MEDIUM_PID" ]] && kill $SERVER_MEDIUM_PID 2>/dev/null || true
+    [[ -n "$SCREEND_PID" ]] && kill $SCREEND_PID 2>/dev/null || true
+    [[ -n "$APP_PID" ]] && kill $APP_PID 2>/dev/null || true
+    [[ -n "$FLUTTER_PID" ]] && kill $FLUTTER_PID 2>/dev/null || true
+
+    # Wait for processes to actually terminate
+    [[ -n "$SERVER_TINY_PID" ]] && wait $SERVER_TINY_PID 2>/dev/null || true
+    [[ -n "$SERVER_MEDIUM_PID" ]] && wait $SERVER_MEDIUM_PID 2>/dev/null || true
+    [[ -n "$SCREEND_PID" ]] && wait $SCREEND_PID 2>/dev/null || true
+    [[ -n "$APP_PID" ]] && wait $APP_PID 2>/dev/null || true
+    [[ -n "$FLUTTER_PID" ]] && wait $FLUTTER_PID 2>/dev/null || true
+    
+    echo "All processes terminated."
+}
+
+# Features compiled out. build/app runs with what it was built without
+# (build/features); --dev compiles from source, so it takes the configured
+# set instead - DISABLE in the environment, else mk/local.mk - and never
+# inherits whatever profile was built last.
+if [[ $DEVELOP == "true" ]]; then
+  DISABLED="${DISABLE-$(make -s -C "$DIR" -f mk/features.mk -f - print-disabled <<<'print-disabled: ; @echo $(DISABLED)')}"
+else
+  DISABLED="${DISABLE-$(cat "$DIR/build/features" 2>/dev/null || true)}"
+fi
+disabled() { [[ " $DISABLED " == *" $1 "* ]]; }
+GO_TAGS=""
+for f in $DISABLED; do GO_TAGS+="${GO_TAGS:+,}no$f"; done
+[[ -n "$DISABLED" ]] && echo "Built without: $DISABLED"
+
+if ! disabled voice; then
+  [[ ! -f $DIR/build/server ]] && echo "Server not built" && exit 1
+fi
+
+# Must be installed before the first background spawn: with set -e, any
+# startup failure after processes launch would otherwise leak them.
+trap cleanup EXIT
+
+# Overlay: --dev runs it through flutter (hot reload); otherwise the release
+# build from `make build`, launched directly so it is tracked and cleaned up
+OVERLAY_BIN=$DIR/build/overlay.app/Contents/MacOS/mouse_whisperer
+if [[ $OVERLAY == "true" && $DEVELOP == "true" ]]; then
+  cwd=$(pwd)
+  cd $DIR/_/overlay/
+  flutter run -d macos &
+  FLUTTER_PID=$!
+  cd $cwd
+elif [[ $OVERLAY == "true" && -x $OVERLAY_BIN ]]; then
+  $OVERLAY_BIN &>/dev/null &
+  FLUTTER_PID=$!
+elif [[ $OVERLAY == "true" ]]; then
+  echo "Overlay not built (make build), starting without it"
+fi
+
+export PKG_CONFIG_PATH="/opt/homebrew/lib/pkgconfig:$PKG_CONFIG_PATH"
+export CGO_CPPFLAGS="-I/opt/homebrew/include"
+export CGO_LDFLAGS="-L/opt/homebrew/lib"
+
+if ! disabled voice; then
+  $DIR/build/server --model $DIR/models/ggml-tiny.en.bin --language en --port 51010 &>/dev/null &
+  SERVER_TINY_PID=$!
+
+  $DIR/build/server --model $DIR/models/ggml-medium.en.bin --language en --port 51011 &>/dev/null &
+  SERVER_MEDIUM_PID=$!
+fi
+
+# Optional scan server (build with `make screend`). Deliberately excluded
+# from the watch loop: the app degrades to local OCR if it dies.
+if ! disabled screend && [[ -f $DIR/build/screend ]]; then
+  # tmp may be a symlink into /tmp (wiped on reboot) — create its target
+  if [[ -L $DIR/tmp ]]; then
+    mkdir -p "$(readlink $DIR/tmp)"
+  else
+    mkdir -p $DIR/tmp
+  fi
+  $DIR/build/screend -port 51013 -helper $DIR/build/screend-helper &> $DIR/tmp/screend.log &
+  SCREEND_PID=$!
+  echo "Scan server started (log: tmp/screend.log)"
+fi
+
+if [[ $DEVELOP == "true" ]]; then
+ echo "Running in develop mode"
+ go run -tags "$GO_TAGS" $DIR/cmd/app "${DEBUG_FLAGS[@]}" &
+ APP_PID=$!
+else
+[[ ! -f $DIR/build/app ]] && echo "App not built" && exit 1
+ echo "Running in production mode"
+ $DIR/build/app "${DEBUG_FLAGS[@]}" &
+ APP_PID=$!
+fi
+
+# Give processes a moment to start and check if they're still running
+sleep 2
+if ! kill -0 $APP_PID 2>/dev/null; then
+    echo "ERROR: App process failed to start or crashed immediately"
+    exit 1
+fi
+
+# Wait for any process to exit
+while true; do
+    # Check if any process has exited
+    if [[ -n "$SERVER_TINY_PID" ]] && ! kill -0 $SERVER_TINY_PID 2>/dev/null; then
+        wait $SERVER_TINY_PID 2>/dev/null || EXIT_CODE=$?
+        echo "ERROR: Server (tiny) exited with code ${EXIT_CODE:-0}"
+        exit ${EXIT_CODE:-1}
+    fi
+    if [[ -n "$SERVER_MEDIUM_PID" ]] && ! kill -0 $SERVER_MEDIUM_PID 2>/dev/null; then
+        wait $SERVER_MEDIUM_PID 2>/dev/null || EXIT_CODE=$?
+        echo "ERROR: Server (medium) exited with code ${EXIT_CODE:-0}"
+        exit ${EXIT_CODE:-1}
+    fi
+    if ! kill -0 $APP_PID 2>/dev/null; then
+        wait $APP_PID 2>/dev/null || EXIT_CODE=$?
+        echo "ERROR: App exited with code ${EXIT_CODE:-0}"
+        exit ${EXIT_CODE:-1}
+    fi
+    if [[ -n "$FLUTTER_PID" ]] && ! kill -0 $FLUTTER_PID 2>/dev/null; then
+        wait $FLUTTER_PID 2>/dev/null || EXIT_CODE=$?
+        echo "Flutter UI exited with code ${EXIT_CODE:-0}"
+        exit ${EXIT_CODE:-0}
+    fi
+    sleep 1
+done

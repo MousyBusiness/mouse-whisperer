@@ -1,0 +1,179 @@
+# ============================================================================
+# MAC SYSTEM COMMANDS - macOS-specific system controls
+# ============================================================================
+[commands.mac]
+[commands.mac.open]
+triggers = ["open"]
+description = "Open and activate a macOS application by name"
+disable_fuzzy = true
+actions = [
+  { method = "desktop_open", args = { prompt = "A MacOS application name e.g. Goland, Studio, iTerm2. output: ", break = "1s", timeout = "5s" } },
+]
+
+[commands.mac.dock]
+triggers = ["dock", "doc", "show dock", "show the dock"]
+description = "Toggle Dock visibility (Ctrl+F3)"
+disable_fuzzy = true
+actions = [
+  { method = "osascript", args = { key_code = 99, modifiers = [
+    "control",
+  ] } },
+]
+
+[commands.mac.desktop]
+triggers = ["show desktop", "desktop"]
+description = "Show desktop by hiding all windows (F11)"
+actions = [{ method = "robotgo", args = { key = "f11" } }]
+
+[commands.mac.search]
+triggers = ["search", "spotlight"]
+description = "Open Spotlight search (Cmd+Space)"
+actions = [
+  { method = "robotgo", args = { key = "space", modifiers = [
+    "cmd",
+  ] } },
+  { method = "type_str", args = { break = "1s", timeout = "7s" } },
+]
+
+[commands.mac.mission_control]
+triggers = ["mission control", "windows"]
+description = "Open Mission Control view (Ctrl+Up)"
+actions = [
+  { method = "osascript", args = { key_code = 126, modifiers = [
+    "control",
+  ] } },
+]
+
+[commands.mac.application_windows]
+triggers = ["application windows"]
+description = "Show all windows of current app (Ctrl+Down)"
+actions = [
+  { method = "osascript", args = { key_code = 125, modifiers = [
+    "control",
+  ] } },
+]
+
+[commands.mac.hide_windows]
+triggers = ["hide windows"]
+description = "Hide all windows (Cmd+H)"
+actions = [
+  { method = "osascript", args = { key_code = 4, modifiers = [
+    "command",
+  ] } },
+]
+
+[commands.mac.hide_window]
+triggers = ["hide window"]
+description = "Minimize current window (Cmd+M)"
+actions = [
+  { method = "osascript", args = { key_code = 46, modifiers = [
+    "command",
+  ] } },
+]
+
+[commands.mac.screen_left]
+triggers = ["screen left", "desktop left"]
+description = "Switch to desktop space on the left (Ctrl+Left)"
+multiplier = true
+actions = [
+  { method = "osascript", args = { key_code = 123, modifiers = [
+    "control",
+  ] } },
+]
+
+[commands.mac.screen_right]
+triggers = ["screen right", "desktop right"]
+description = "Switch to desktop space on the right (Ctrl+Right)"
+multiplier = true
+actions = [
+  { method = "osascript", args = { key_code = 124, modifiers = [
+    "control",
+  ] } },
+]
+
+[commands.mac.screenshot_save]
+triggers = ["screenshot save"]
+description = "Save full screenshot to file (Cmd+Shift+3)"
+actions = [
+  { method = "osascript", args = { key_code = 20, modifiers = [
+    "shift",
+    "command",
+  ] } },
+]
+
+[commands.mac.screenshot_copy]
+triggers = ["screenshot copy"]
+description = "Copy full screenshot to clipboard (Cmd+Shift+Ctrl+3)"
+actions = [
+  { method = "osascript", args = { key_code = 20, modifiers = [
+    "shift",
+    "command",
+    "control",
+  ] } },
+]
+
+[commands.mac.screenshot_region_save]
+triggers = ["screenshot region save"]
+description = "Save region screenshot to file (Cmd+Shift+4)"
+actions = [
+  { method = "osascript", args = { key_code = 21, modifiers = [
+    "shift",
+    "command",
+  ] } },
+]
+
+[commands.mac.screenshot_region_copy]
+triggers = ["screenshot region copy"]
+description = "Copy region screenshot to clipboard (Cmd+Shift+Ctrl+4)"
+actions = [
+  { method = "osascript", args = { key_code = 21, modifiers = [
+    "shift",
+    "command",
+    "control",
+  ] } },
+]
+
+[commands.mac.search_files]
+triggers = ["search files"]
+description = "Open Finder search (Cmd+Option+Space)"
+actions = [
+  { method = "osascript", args = { key_code = 49, modifiers = [
+    "option",
+    "command",
+  ] } },
+]
+
+
+[commands.mac.kill_tab]
+triggers = ["kill tab", "close tab"]
+description = "Close current tab (Cmd+W)"
+disable_fuzzy = true
+actions = [
+  { method = "keybd_event", args = { key = "VK_W", modifiers = [
+    "cmd",
+  ] } },
+]
+
+
+[commands.mac.lock_screen]
+triggers = ["lock screen"]
+description = "Lock the screen (Ctrl+Cmd+Q)"
+actions = [
+  { method = "robotgo", args = { key = "q", modifiers = [
+    "ctrl",
+    "cmd",
+  ] } },
+]
+
+
+[commands.mac.mic_max]
+triggers = ["mic max", "mike mac", "input max"]
+description = "Max the mic input"
+actions = [{ method = "applescript", args = { script = "set volume input volume 100" } }]
+
+
+[commands.mac.mute]
+triggers = ["mute"]
+description = "Mute"
+actions = [{ method = "applescript", args = { script = "set volume output volume 0" } }]
+

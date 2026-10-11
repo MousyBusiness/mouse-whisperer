@@ -1,0 +1,64 @@
+# ============================================================================
+# SYSTEM COMMANDS - System-level voice control
+# ============================================================================
+[commands.system]
+[commands.system.enable_voice]
+triggers = ["enable voice", "voice on", "start listening"]
+description = "Enable voice recognition and start listening for commands"
+states = ["not_listening"]
+actions = [{ method = "enable_voice" }]
+
+[commands.system.disable_voice]
+triggers = ["disable voice", "voice off", "stop listening"]
+description = "Disable voice recognition and stop listening for commands"
+actions = [{ method = "disable_voice" }]
+
+[commands.system.reset_keys]
+triggers = ["reset keys"]
+description = "Release all modifier keys (cmd, shift, ctrl, alt) if stuck"
+actions = [{ method = "reset_keys" }]
+
+[commands.system.show_hints]
+triggers = ["show hints", "hints", "list hints", "what can I say"]
+description = "Display all available voice hint categories"
+actions = [{ method = "show_hints" }]
+
+[commands.system.show_category]
+triggers = ["show"]
+description = "Show hints in a category. Say 'show system' or 'show 1'"
+actions = [{ method = "show_category" }]
+
+[commands.system.pick]
+triggers = ["pick"]
+description = "Pick an item by number from the displayed list (e.g., 'pick 3')"
+actions = [{ method = "pick" }]
+
+[commands.system.hide_hints]
+triggers = ["hide hints", "close hints", "dismiss"]
+description = "Close/dismiss the active hints UI panel"
+actions = [{ method = "hide_hints" }]
+
+[commands.system.show_more]
+triggers = ["more"]
+description = "Scroll the active UI panel down to show more content"
+actions = [{ method = "show_more" }]
+
+[commands.system.show_less]
+triggers = ["less"]
+description = "Scroll the active UI panel up to show previous content"
+actions = [{ method = "show_less" }]
+
+[commands.system.stop]
+triggers = ["stop"]
+description = "Stop"
+actions = [{ method = "stop" }]
+
+[commands.system.reload_config]
+triggers = ["reload config", "reset config"]
+description = "Reload configuration files without restarting the app"
+actions = [{ method = "reload_config" }]
+
+[commands.system.show_inputs]
+triggers = ["show inputs", "list inputs", "audio inputs"]
+description = "Display available microphone input devices"
+actions = [{ method = "show_inputs" }]

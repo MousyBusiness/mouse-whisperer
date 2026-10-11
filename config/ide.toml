@@ -1,0 +1,210 @@
+# ============================================================================
+# IDE COMMANDS - Editor-specific shortcuts
+# ============================================================================
+[commands.ide]
+[commands.ide.new]
+triggers = ["new"]
+description = "Create new file or item (Cmd+N)"
+actions = [
+  { method = "keybd_event", args = { key = "VK_N", modifiers = [
+    "cmd",
+  ] } },
+]
+
+[commands.ide.show_project]
+triggers = ["show project"]
+description = "Show the project panel/file explorer (Cmd+1)"
+actions = [{ method = "robotgo", args = { key = "1", modifiers = ["cmd"] } }]
+
+[commands.ide.hide_project]
+triggers = ["hide project"]
+description = "Hide the project panel/file explorer (Cmd+1)"
+actions = [{ method = "robotgo", args = { key = "1", modifiers = ["cmd"] } }]
+
+[commands.ide.toggle_terminal]
+triggers = ["toggle terminal"]
+description = "Show the integrated terminal panel"
+actions = [{ method = "robotgo", args = { key = "j", modifiers = ["cmd"] } }]
+
+[commands.ide.files]
+triggers = ["files"]
+description = "Find files in project (Cmd+Shift+F)"
+actions = [
+  { method = "robotgo", args = { key = "shift" }, sleep = 150 },
+  { method = "robotgo", args = { key = "shift" }, sleep = 500 },
+]
+
+[commands.ide.duplicate]
+triggers = ["duplicate"]
+description = "Duplicate the current line or selection (Cmd+D)"
+actions = [
+  { method = "keybd_event", args = { key = "VK_D", modifiers = [
+    "cmd",
+  ] } },
+]
+
+[commands.ide.smart]
+triggers = ["smart"]
+description = "Show smart actions/intentions menu (Alt+Enter)"
+actions = [
+  { method = "robotgo", args = { key = "enter", modifiers = [
+    "alt",
+  ] } },
+]
+
+[commands.ide.fix]
+triggers = ["fix"]
+description = "Apply quick fix suggestion (Alt+Enter then Enter)"
+actions = [
+  { method = "robotgo", args = { key = "enter", modifiers = [
+    "alt",
+  ] }, sleep = 200 },
+]
+
+[commands.ide.save]
+triggers = ["save"]
+description = "Save the current file (Cmd+S)"
+actions = [
+  { method = "keybd_event", args = { key = "VK_S", modifiers = [
+    "cmd",
+  ] } },
+]
+
+[commands.ide.go]
+triggers = ["go"]
+description = "Go to definition/declaration (Cmd+B)"
+actions = [
+  { method = "keybd_event", args = { key = "VK_B", modifiers = [
+    "cmd",
+  ] } },
+]
+
+[commands.ide.back]
+triggers = ["back"]
+description = "Navigate back in editor history (Cmd+Alt+Left)"
+multiplier = true
+actions = [
+  { method = "keybd_event", args = { key = "VK_LEFT", modifiers = [
+    "cmd",
+    "alt",
+  ] } },
+]
+
+[commands.ide.forward]
+triggers = ["forward"]
+description = "Navigate forward in editor history (Cmd+Alt+Right)"
+multiplier = true
+actions = [
+  { method = "keybd_event", args = { key = "VK_RIGHT", modifiers = [
+    "cmd",
+    "alt",
+  ] } },
+]
+
+[commands.ide.group_up]
+triggers = ["group up"]
+description = "Move cursor up by code block/method (Alt+Up)"
+multiplier = true
+actions = [
+  { method = "keybd_event", args = { key = "VK_UP", modifiers = [
+    "alt",
+  ] } },
+]
+
+[commands.ide.group_down]
+triggers = ["group down"]
+description = "Move cursor down by code block/method (Alt+Down)"
+multiplier = true
+actions = [
+  { method = "keybd_event", args = { key = "VK_DOWN", modifiers = [
+    "alt",
+  ] } },
+]
+
+[commands.ide.push_up]
+triggers = ["push up"]
+description = "Push current line/selection up (Shift+Alt+Up)"
+multiplier = true
+actions = [
+  { method = "keybd_event", args = { key = "VK_UP", modifiers = [
+    "shift",
+    "alt",
+  ] } },
+]
+
+[commands.ide.push_down]
+triggers = ["push down"]
+description = "Push current line/selection down (Shift+Alt+Down)"
+multiplier = true
+actions = [
+  { method = "keybd_event", args = { key = "VK_DOWN", modifiers = [
+    "shift",
+    "alt",
+  ] } },
+]
+
+[commands.ide.rename]
+triggers = ["rename"]
+description = "Rename symbol under cursor (Shift+Ctrl+R)"
+actions = [
+  { method = "keybd_event", args = { key = "VK_R", modifiers = [
+    "shift",
+    "ctrl",
+  ] } },
+]
+
+[commands.ide.format]
+triggers = ["format"]
+description = "Reformat code in current file (Cmd+Alt+L)"
+actions = [
+  { method = "keybd_event", args = { key = "VK_L", modifiers = [
+    "cmd",
+    "alt",
+  ] } },
+]
+
+[commands.ide.start]
+triggers = ["start"]
+description = "Move cursor to start of line (Cmd+Left)"
+actions = [
+  { method = "keybd_event", args = { key = "VK_LEFT", modifiers = [
+    "cmd",
+  ] } },
+]
+
+[commands.ide.end]
+triggers = ["end"]
+description = "Move cursor to end of line (Cmd+Right)"
+actions = [
+  { method = "keybd_event", args = { key = "VK_RIGHT", modifiers = [
+    "cmd",
+  ] } },
+]
+
+[commands.ide.find]
+triggers = ["find"]
+description = "Open find dialog and search for text (Cmd+F)"
+actions = [
+  { method = "keybd_event", args = { key = "VK_F", modifiers = [
+    "cmd",
+  ] } },
+]
+
+[commands.ide.global_find]
+triggers = ["global find"]
+description = "Open find dialog and search for text (Cmd+Shift+F)"
+actions = [
+  { method = "keybd_event", args = { key = "VK_F", modifiers = [
+    "cmd",
+    "shift",
+  ] } },
+]
+
+[commands.ide.cursor_build_continue]
+triggers = ["build", "continue"]
+description = "Build and continue (Cmd+Enter)"
+actions = [
+  { method = "robotgo", args = { key = "enter", modifiers = [
+    "cmd",
+  ] } },
+]

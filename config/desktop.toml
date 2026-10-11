@@ -1,0 +1,114 @@
+# ============================================================================
+# DESKTOP COMMANDS - OS and window management
+# ============================================================================
+[commands.desktop]
+[commands.desktop.new_tab]
+triggers = ["new tab"]
+description = "Open new tab (Cmd+T)"
+actions = [
+  { method = "keybd_event", args = { key = "VK_T", modifiers = [
+    "cmd",
+  ] } },
+]
+
+[commands.desktop.restore_tab]
+triggers = ["restore tab", "reopen tab"]
+description = "Restore recently closed tab (Cmd+Shift+T)"
+actions = [
+  { method = "keybd_event", args = { key = "VK_T", modifiers = [
+    "cmd",
+    "shift",
+  ] } },
+]
+
+[commands.desktop.page_one]
+triggers = ["page 1", "swap 1", "flip 1"]
+description = "Switch to tab 1 (Cmd+1)"
+actions = [{ method = "robotgo", args = { key = "1", modifiers = ["cmd"] } }]
+
+[commands.desktop.page_two]
+triggers = ["page 2", "swap 2", "flip 2"]
+description = "Switch to tab 2 (Cmd+2)"
+actions = [{ method = "robotgo", args = { key = "2", modifiers = ["cmd"] } }]
+
+[commands.desktop.page_three]
+triggers = ["page 3", "swap 3", "flip 3"]
+description = "Switch to tab 3 (Cmd+3)"
+actions = [{ method = "robotgo", args = { key = "3", modifiers = ["cmd"] } }]
+
+[commands.desktop.page_four]
+triggers = ["page 4", "swap 4", "flip 4"]
+description = "Switch to tab 4 (Cmd+4)"
+actions = [{ method = "robotgo", args = { key = "4", modifiers = ["cmd"] } }]
+
+[commands.desktop.page_five]
+triggers = ["page 5", "swap 5", "flip 5"]
+description = "Switch to tab 5 (Cmd+5)"
+actions = [{ method = "robotgo", args = { key = "5", modifiers = ["cmd"] } }]
+
+[commands.desktop.page_six]
+triggers = ["page 6", "swap 6", "flip 6"]
+description = "Switch to tab 6 (Cmd+6)"
+actions = [{ method = "robotgo", args = { key = "6", modifiers = ["cmd"] } }]
+
+[commands.desktop.page_seven]
+triggers = ["page 7", "swap 7", "flip 7"]
+description = "Switch to tab 7 (Cmd+7)"
+actions = [{ method = "robotgo", args = { key = "7", modifiers = ["cmd"] } }]
+
+[commands.desktop.page_eight]
+triggers = ["page 8", "swap 8", "flip 8"]
+description = "Switch to tab 8 (Cmd+8)"
+actions = [{ method = "robotgo", args = { key = "8", modifiers = ["cmd"] } }]
+
+[commands.desktop.page_nine]
+triggers = ["page 9", "swap 9", "flip 9", "page last", "swap last", "flip last"]
+description = "Switch to last tab (Cmd+9)"
+actions = [{ method = "robotgo", args = { key = "9", modifiers = ["cmd"] } }]
+
+[commands.desktop.other]
+triggers = ["other"]
+description = "Switch to other window of same app (Cmd+`)"
+actions = [
+  { method = "keybd_event", args = { key = "VK_GRAVE", modifiers = [
+    "cmd",
+  ] } },
+]
+
+[commands.desktop.switch]
+triggers = ["switch"]
+description = "Open app switcher and navigate left/right"
+actions = [{ method = "desktop_switch" }]
+
+[commands.desktop.toggle]
+triggers = ["toggle"]
+description = "Toggle to previous application (Cmd+Tab)"
+actions = [{ method = "robotgo", args = { key = "tab", modifiers = ["cmd"] } }]
+
+[commands.desktop.refresh]
+triggers = ["refresh"]
+description = "Refresh current page/view (Cmd+R)"
+disable_fuzzy = true
+actions = [
+  { method = "keybd_event", args = { key = "VK_R", modifiers = [
+    "cmd",
+  ] } },
+]
+
+[commands.desktop.browser_back]
+triggers = ["browser back", "web back"]
+description = "Navigate back in browser/app (Cmd+[)"
+actions = [
+  { method = "keybd_event", args = { key = "VK_LEFT", modifiers = [
+    "cmd",
+  ] } },
+]
+
+[commands.desktop.browser_forward]
+triggers = ["browser forward", "web forward"]
+description = "Navigate forward in browser/app (Cmd+])"
+actions = [
+  { method = "keybd_event", args = { key = "VK_RIGHT", modifiers = [
+    "cmd",
+  ] } },
+]

@@ -1,0 +1,30 @@
+name: mouse_whisperer
+description: An overlay for the mouse_whisperer project
+
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.6 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  window_manager: ^0.5.1
+  flutter_animate: ^4.5.0
+  toastification: ^3.0.3
+  google_fonts: ^6.2.1
+  highlight: ^0.7.0
+  linked_scroll_controller: ^0.2.0
+  protobuf: ^4.0.0
+  # generated WKT code (google/protobuf/*.pb.dart) imports fixnum directly
+  fixnum: ^1.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true

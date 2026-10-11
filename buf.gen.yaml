@@ -1,0 +1,30 @@
+version: v2
+managed:
+  enabled: true
+  override:
+    - file_option: go_package_prefix
+      value: github.com/mousybusiness/mouse_whisperer/gen
+    # Don't modify any file option or field option for protovalidate. Without
+    # this, generated Go will fail to compile.
+  disable:
+plugins:
+  - remote: buf.build/protocolbuffers/go
+    out: gen
+    opt: paths=source_relative
+  # Dart has no runtime-provided well-known types (unlike Go), so the WKTs
+  # imported by our protos (google/protobuf/timestamp.proto) must be generated
+  # alongside — include_wkt requires include_imports.
+  - remote: buf.build/protocolbuffers/dart:v22.3.0
+    out: _/overlay/lib/gen
+    include_imports: true
+    include_wkt: true
+  - remote: buf.build/protocolbuffers/dart:v22.3.0
+    out: _/companion/lib/gen
+    include_imports: true
+    include_wkt: true
+    types:
+      - mouse_whisperer.companion.v1.Modifier
+      - mouse_whisperer.companion.v1.MouseEvent
+      - mouse_whisperer.companion.v1.Payload
+inputs:
+  - directory: proto

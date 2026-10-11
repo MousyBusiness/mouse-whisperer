@@ -1,0 +1,38 @@
+# ============================================================================
+# FLUTTER COMMANDS - Flutter development shortcuts
+# ============================================================================
+[commands.flutter]
+[commands.flutter.reload]
+triggers = ["flutter reload"]
+description = "Hot reload Flutter app (Cmd+Backslash)"
+actions = [
+  { method = "keybd_event", args = { key = "VK_BACKSLASH", modifiers = [
+    "cmd",
+  ] } },
+]
+
+[commands.flutter.restart]
+triggers = ["flutter restart"]
+description = "Hot restart Flutter app (Cmd+Shift+Backslash)"
+actions = [
+  { method = "keybd_event", args = { key = "VK_BACKSLASH", modifiers = [
+    "cmd",
+    "shift",
+  ] } },
+]
+
+[commands.flutter.run]
+triggers = ["flutter run"]
+description = "Run Flutter app (Ctrl+R)"
+actions = [
+  { method = "keybd_event", args = { key = "VK_F5" } },
+]
+
+[commands.flutter.stop]
+triggers = ["flutter kill", "flutter stop"]
+description = "Stop running Flutter app (Cmd+F2)"
+actions = [
+  { method = "keybd_event", args = { key = "VK_F2", modifiers = [
+    "cmd",
+  ] } },
+]

@@ -1,0 +1,9 @@
+[commands.companion.mouse_sensitivity_up]
+triggers = ["sensitivity up"]
+description = "Increase the mouse sensitivity"
+actions = [{ method = "companion_mouse_sensitivity_up" }]
+
+[commands.companion.mouse_sensitivity_down]
+triggers = ["sensitivity down"]
+description = "Decrease the mouse sensitivity"
+actions = [{ method = "companion_mouse_sensitivity_down" }]

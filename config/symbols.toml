@@ -1,0 +1,173 @@
+# ============================================================================
+# SYMBOL COMMANDS - Insert punctuation and programming symbols
+# ============================================================================
+[commands.symbols]
+[commands.symbols.exclamation]
+triggers = ["exclamation"]
+description = "Type exclamation mark (!)"
+actions = [{ method = "type_str", args = { text = "!" } }]
+
+[commands.symbols.at]
+triggers = ["at"]
+description = "Type at symbol (@)"
+actions = [{ method = "type_str", args = { text = "@" } }]
+
+[commands.symbols.hash]
+triggers = ["hash"]
+description = "Type hash/pound symbol (#)"
+actions = [{ method = "type_str", args = { text = "#" } }]
+
+[commands.symbols.dollar]
+triggers = ["dollar"]
+description = "Type dollar sign ($)"
+actions = [{ method = "type_str", args = { text = "$" } }]
+
+[commands.symbols.percent]
+triggers = ["percent"]
+description = "Type percent symbol (%)"
+actions = [{ method = "type_str", args = { text = "%" } }]
+
+[commands.symbols.carat_up]
+triggers = ["carat up"]
+description = "Type caret/circumflex (^)"
+actions = [{ method = "type_str", args = { text = "^" } }]
+
+[commands.symbols.and]
+triggers = ["and"]
+description = "Type ampersand (&)"
+actions = [{ method = "type_str", args = { text = "&" } }]
+
+[commands.symbols.asterisks]
+triggers = ["asterisks"]
+description = "Type asterisk (*)"
+actions = [{ method = "type_str", args = { text = "*" } }]
+
+[commands.symbols.pipe]
+triggers = ["pipe"]
+description = "Type pipe/vertical bar (|)"
+actions = [{ method = "type_str", args = { text = "|" } }]
+
+[commands.symbols.backslash]
+triggers = ["backslash"]
+description = "Type backslash (\\)"
+actions = [{ method = "type_str", args = { text = "\\" } }]
+
+[commands.symbols.slash]
+triggers = ["slash"]
+description = "Type forward slash (/)"
+actions = [{ method = "type_str", args = { text = "/" } }]
+
+[commands.symbols.quote]
+triggers = ["quote"]
+description = "Type double quote (\")"
+actions = [{ method = "type_str", args = { text = "\"" } }]
+
+[commands.symbols.single_quote]
+triggers = ["single quote"]
+description = "Type single quote/apostrophe (')"
+actions = [{ method = "type_str", args = { text = "'" } }]
+
+[commands.symbols.backtick]
+triggers = ["backtick", "tick"]
+description = "Type backtick/grave accent (`)"
+actions = [{ method = "type_str", args = { text = "`" } }]
+
+[commands.symbols.tilde]
+triggers = ["tilde"]
+description = "Type tilde (~)"
+actions = [{ method = "type_str", args = { text = "~" } }]
+
+[commands.symbols.colon]
+triggers = ["colon"]
+description = "Type colon (:)"
+actions = [{ method = "type_str", args = { text = ":" } }]
+
+[commands.symbols.carat_left]
+triggers = ["carat left"]
+description = "Type less-than (<)"
+actions = [{ method = "type_str", args = { text = "<" } }]
+
+[commands.symbols.carat_right]
+triggers = ["carat right"]
+description = "Type greater-than (>)"
+actions = [{ method = "type_str", args = { text = ">" } }]
+
+[commands.symbols.not_equals]
+triggers = ["not equals"]
+description = "Type not-equals operator (!=)"
+actions = [{ method = "type_str", args = { text = "!=" } }]
+
+[commands.symbols.equals]
+triggers = ["equals"]
+description = "Type equals sign (=)"
+actions = [{ method = "type_str", args = { text = "=" } }]
+
+[commands.symbols.double_equals]
+triggers = ["exactly equals", "double equals"]
+description = "Type equality operator (==)"
+actions = [{ method = "type_str", args = { text = "==" } }]
+
+[commands.symbols.walrus]
+triggers = ["walrus"]
+description = "Type walrus/short declaration operator (:=)"
+actions = [{ method = "type_str", args = { text = ":=" } }]
+
+[commands.symbols.dot]
+triggers = ["dot", "period"]
+description = "Type period/dot (.)"
+actions = [{ method = "type_str", args = { text = "." } }]
+
+[commands.symbols.comma]
+triggers = ["comma"]
+description = "Type comma (,)"
+actions = [{ method = "type_str", args = { text = "," } }]
+
+[commands.symbols.semicolon]
+triggers = ["simicolon", "semicolon", "semi colon"]
+description = "Type semicolon (;)"
+actions = [{ method = "type_str", args = { text = ";" } }]
+
+[commands.symbols.question]
+triggers = ["question mark", "question"]
+description = "Type question mark (?)"
+actions = [{ method = "type_str", args = { text = "?" } }]
+
+[commands.symbols.left_bracket]
+triggers = ["bracket", "left bracket"]
+description = "Type left parenthesis (("
+actions = [{ method = "type_str", args = { text = "(" } }]
+
+[commands.symbols.right_bracket]
+triggers = ["right bracket"]
+description = "Type right parenthesis ())"
+actions = [{ method = "type_str", args = { text = ")" } }]
+
+[commands.symbols.left_square_bracket]
+triggers = ["square bracket", "left square bracket"]
+description = "Type left square bracket ([)"
+actions = [{ method = "type_str", args = { text = "[" } }]
+
+[commands.symbols.right_square_bracket]
+triggers = ["right square bracket"]
+description = "Type right square bracket (])"
+actions = [{ method = "type_str", args = { text = "]" } }]
+
+[commands.symbols.left_curly_bracket]
+triggers = ["curly bracket", "left curly bracket"]
+description = "Type left curly brace ({)"
+actions = [{ method = "type_str", args = { text = "{" } }]
+
+[commands.symbols.right_curly_bracket]
+triggers = ["right curly bracket"]
+description = "Type right curly brace (})"
+actions = [{ method = "type_str", args = { text = "}" } }]
+
+[commands.symbols.underscore]
+triggers = ["underscore"]
+description = "Type underscore (_)"
+actions = [{ method = "type_str", args = { text = "_" } }]
+
+[commands.symbols.hyphen]
+triggers = ["hyphen", "dash"]
+description = "Type hyphen/dash (-)"
+actions = [{ method = "type_str", args = { text = "-" } }]

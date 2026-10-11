@@ -1,0 +1,40 @@
+# ============================================================================
+# GIT COMMANDS - Git workflow helpers (semantic commit prefixes, etc.)
+# ============================================================================
+
+[commands.git]
+
+[commands.git.semantic_chore]
+triggers = ["semantic chore"]
+description = "Type 'chore: ' commit prefix"
+actions = [{ method = "type_str", args = { text = "chore: " } }]
+
+[commands.git.semantic_fix]
+triggers = ["semantic fix"]
+description = "Type 'fix: ' commit prefix"
+actions = [{ method = "type_str", args = { text = "fix: " } }]
+
+[commands.git.semantic_test]
+triggers = ["semantic test"]
+description = "Type 'test: ' commit prefix"
+actions = [{ method = "type_str", args = { text = "test: " } }]
+
+[commands.git.semantic_feat]
+triggers = ["semantic feat", "semantic feature"]
+description = "Type 'feat: ' commit prefix"
+actions = [{ method = "type_str", args = { text = "feat: " } }]
+
+[commands.git.semantic_enhancement]
+triggers = ["semantic enhancement"]
+description = "Type 'enhan: ' commit prefix"
+actions = [{ method = "type_str", args = { text = "enhan: " } }]
+
+[commands.git.semantic_wip]
+triggers = ["semantic whip"]
+description = "Type 'wip: ' commit prefix"
+actions = [{ method = "type_str", args = { text = "wip: " } }]
+
+[commands.git.semantic_refactor]
+triggers = ["semantic refactor"]
+description = "Type 'refactor: ' commit prefix"
+actions = [{ method = "type_str", args = { text = "refactor: " } }]

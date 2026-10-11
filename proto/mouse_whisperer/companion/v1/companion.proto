@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package mouse_whisperer.companion.v1;
+
+import "google/protobuf/timestamp.proto";
+
+enum Modifier {
+  MODIFIER_UNSPECIFIED = 0;
+  MODIFIER_COMMAND = 1;
+  MODIFIER_CONTROL = 2;
+  MODIFIER_OPTION = 3;
+  MODIFIER_SHIFT = 4;
+  MODIFIER_SUPER = 5;
+}
+
+message MouseEvent{
+  enum EventType {
+    EVENT_TYPE_UNSPECIFIED = 0;
+    EVENT_TYPE_CLICK = 1;
+    EVENT_TYPE_LONG_PRESS = 2;
+    EVENT_TYPE_DRAG = 3;
+    EVENT_TYPE_FLING = 4;
+    EVENT_TYPE_FINISH = 10;
+  }
+  EventType type = 1;
+  int32 pointer_count = 2;
+  int32 pointer_sequence = 3; // sequence number of the pointer
+  repeated Modifier modifiers = 4;
+  optional float delta_x = 5; // relative
+  optional float delta_y = 6; // relative
+}
+
+message KeyboardEvent{
+  enum EventType {
+    EVENT_TYPE_UNSPECIFIED = 0;
+    EVENT_TYPE_TYPE_STRING = 1;
+  }
+
+  EventType type = 1;
+
+  oneof data {
+    string type_string = 10;
+  }
+}
+
+message Payload {
+  string event_group_id = 1;
+  google.protobuf.Timestamp timestamp = 2;
+
+  oneof data {
+    MouseEvent mouse = 5;
+    KeyboardEvent keyboard = 6;
+    string command = 7;
+  }
+}

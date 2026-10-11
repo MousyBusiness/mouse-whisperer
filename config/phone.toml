@@ -1,0 +1,163 @@
+# ============================================================================
+# PHONE COMMANDS - Talon phonetic alphabet (spoken word -> single letter)
+# Say the phonetic word to type the matching lowercase letter.
+# disable_fuzzy keeps these 26 short triggers from grabbing each other or
+# nearby words during normal dictation.
+# ============================================================================
+[commands.phone]
+
+[commands.phone.air]
+triggers = ["air"]
+description = "Type letter a"
+disable_fuzzy = true
+actions = [{ method = "type_str", args = { text = "a" } }]
+
+[commands.phone.bat]
+triggers = ["bat"]
+description = "Type letter b"
+disable_fuzzy = true
+actions = [{ method = "type_str", args = { text = "b" } }]
+
+[commands.phone.cap]
+triggers = ["cap"]
+description = "Type letter c"
+disable_fuzzy = true
+actions = [{ method = "type_str", args = { text = "c" } }]
+
+[commands.phone.drum]
+triggers = ["drum"]
+description = "Type letter d"
+disable_fuzzy = true
+actions = [{ method = "type_str", args = { text = "d" } }]
+
+[commands.phone.each]
+triggers = ["each"]
+description = "Type letter e"
+disable_fuzzy = true
+actions = [{ method = "type_str", args = { text = "e" } }]
+
+[commands.phone.fine]
+triggers = ["fine"]
+description = "Type letter f"
+disable_fuzzy = true
+actions = [{ method = "type_str", args = { text = "f" } }]
+
+[commands.phone.gust]
+triggers = ["gust"]
+description = "Type letter g"
+disable_fuzzy = true
+actions = [{ method = "type_str", args = { text = "g" } }]
+
+[commands.phone.harp]
+triggers = ["harp"]
+description = "Type letter h"
+disable_fuzzy = true
+actions = [{ method = "type_str", args = { text = "h" } }]
+
+[commands.phone.sit]
+triggers = ["sit"]
+description = "Type letter i"
+disable_fuzzy = true
+actions = [{ method = "type_str", args = { text = "i" } }]
+
+[commands.phone.jury]
+triggers = ["jury"]
+description = "Type letter j"
+disable_fuzzy = true
+actions = [{ method = "type_str", args = { text = "j" } }]
+
+[commands.phone.crunch]
+triggers = ["crunch"]
+description = "Type letter k"
+disable_fuzzy = true
+actions = [{ method = "type_str", args = { text = "k" } }]
+
+[commands.phone.look]
+triggers = ["look"]
+description = "Type letter l"
+disable_fuzzy = true
+actions = [{ method = "type_str", args = { text = "l" } }]
+
+[commands.phone.made]
+triggers = ["made"]
+description = "Type letter m"
+disable_fuzzy = true
+actions = [{ method = "type_str", args = { text = "m" } }]
+
+[commands.phone.near]
+triggers = ["near"]
+description = "Type letter n"
+disable_fuzzy = true
+actions = [{ method = "type_str", args = { text = "n" } }]
+
+[commands.phone.odd]
+triggers = ["odd"]
+description = "Type letter o"
+disable_fuzzy = true
+actions = [{ method = "type_str", args = { text = "o" } }]
+
+[commands.phone.pour]
+triggers = ["pour"]
+description = "Type letter p"
+disable_fuzzy = true
+actions = [{ method = "type_str", args = { text = "p" } }]
+
+[commands.phone.quench]
+triggers = ["quench"]
+description = "Type letter q"
+disable_fuzzy = true
+actions = [{ method = "type_str", args = { text = "q" } }]
+
+[commands.phone.red]
+triggers = ["red"]
+description = "Type letter r"
+disable_fuzzy = true
+actions = [{ method = "type_str", args = { text = "r" } }]
+
+[commands.phone.sun]
+triggers = ["sun"]
+description = "Type letter s"
+disable_fuzzy = true
+actions = [{ method = "type_str", args = { text = "s" } }]
+
+[commands.phone.trap]
+triggers = ["trap"]
+description = "Type letter t"
+disable_fuzzy = true
+actions = [{ method = "type_str", args = { text = "t" } }]
+
+[commands.phone.urge]
+triggers = ["urge"]
+description = "Type letter u"
+disable_fuzzy = true
+actions = [{ method = "type_str", args = { text = "u" } }]
+
+[commands.phone.vest]
+triggers = ["vest"]
+description = "Type letter v"
+disable_fuzzy = true
+actions = [{ method = "type_str", args = { text = "v" } }]
+
+[commands.phone.whale]
+triggers = ["whale"]
+description = "Type letter w"
+disable_fuzzy = true
+actions = [{ method = "type_str", args = { text = "w" } }]
+
+[commands.phone.plex]
+triggers = ["plex"]
+description = "Type letter x"
+disable_fuzzy = true
+actions = [{ method = "type_str", args = { text = "x" } }]
+
+[commands.phone.yank]
+triggers = ["yank"]
+description = "Type letter y"
+disable_fuzzy = true
+actions = [{ method = "type_str", args = { text = "y" } }]
+
+[commands.phone.zip]
+triggers = ["zip"]
+description = "Type letter z"
+disable_fuzzy = true
+actions = [{ method = "type_str", args = { text = "z" } }]

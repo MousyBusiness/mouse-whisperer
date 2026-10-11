@@ -1,0 +1,304 @@
+# ============================================================================
+# MOUSE COMMANDS - Mouse control and navigation
+# ============================================================================
+[commands.mouse]
+[commands.mouse.move_complex]
+triggers = ["move", "jump"]
+description = "Move mouse to a specific location (chained input)"
+actions = [
+  { id = "move_chained", method = "mouse_move_chained", states = [
+    "overlay_hex",
+  ] },
+  { id = "ocr", method = "ocr_move_nearby", requires_trailer = true },
+]
+action_callbacks = [
+  { for = "move_chained", result = "skip", method = "__continue__" },
+  { for = "move_chained", result = "success", method = "__done__" },
+  { for = "ocr", result = "skip", method = "mouse_move" },
+]
+
+
+[commands.mouse.click_complex]
+triggers = ["click"]
+description = "Click at a specific location (chained input)"
+actions = [
+  { id = "click_chained", method = "mouse_click_chained", states = [
+    "overlay_hex",
+  ] },
+  { id = "ocr", method = "ocr_click_nearby", requires_trailer = true },
+]
+action_callbacks = [
+  { for = "click_chained", result = "skip", method = "__continue__" },
+  { for = "click_chained", result = "success", method = "__done__" },
+  { for = "ocr", result = "skip", method = "mouse_click" },
+]
+
+[commands.mouse.select_complex]
+triggers = ["select"]
+description = "Select (double-click) on-screen text; bare 'select' still selects the word under the cursor"
+actions = [
+  { id = "select_chained", method = "mouse_select_chained", states = [
+    "overlay_hex",
+  ] },
+  { id = "ocr", method = "ocr_select_nearby", requires_trailer = true },
+  # bare "select" with no trailer: the original select-word-under-cursor keystrokes
+  { method = "keybd_event", args = { key = "VK_LEFT", modifiers = ["alt"] } },
+  { method = "keybd_event", args = { key = "VK_RIGHT", modifiers = [
+    "shift",
+    "alt",
+  ] } },
+]
+action_callbacks = [
+  { for = "select_chained", result = "skip", method = "__continue__" },
+  { for = "select_chained", result = "success", method = "__done__" },
+  { for = "ocr", result = "skip", method = "__continue__" },
+  { for = "ocr", result = "success", method = "__done__" },
+]
+
+[commands.mouse.pick_target]
+triggers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+description = "Act on the numbered target from the scan overlay"
+disable_fuzzy = true
+states = ["overlay_hex"]
+actions = [{ method = "ocr_pick_target" }]
+
+
+[commands.mouse.scan_full]
+triggers = ["full scan"]
+description = "OCR scan whole screen (e.g., 'full scan readme.md')"
+actions = [
+  { method = "ocr_scan_full", args = { prompt = "Text to search for: ", break = "750ms", timeout = "6s" } },
+]
+
+[commands.mouse.scan_nearby]
+triggers = ["scan"]
+description = "Fast OCR scan in 400x400 region around eye position (e.g., 'scan nearby readme.md')"
+actions = [
+  { method = "ocr_scan_nearby", args = { prompt = "Text to search for: ", break = "750ms", timeout = "6s" } },
+]
+
+[commands.mouse.position]
+triggers = ["mouse position"]
+description = "Move mouse to grid position (1-9 numpad layout)"
+actions = [{ method = "mouse_position" }]
+
+[commands.mouse.center]
+triggers = ["center mouse"]
+description = "Move mouse to center of screen"
+actions = [{ method = "mouse_center" }]
+
+[commands.mouse.ghost]
+triggers = ["ghost"]
+description = "Show eye tracking ghost cursor indicator"
+actions = [{ method = "mouse_ghost" }]
+
+[commands.mouse.screenshot]
+triggers = ["screenshot"]
+description = "Screenshot region around eye/mouse position"
+actions = [{ method = "screenshot" }]
+
+[commands.mouse.screenshot_tall]
+triggers = ["screenshot tall"]
+description = "Tall screenshot region around eye/mouse position"
+actions = [{ method = "screenshot", args = { variant = "tall" } }]
+
+[commands.mouse.screenshot_wide]
+triggers = ["screenshot wide"]
+description = "Wide screenshot region around eye/mouse position"
+actions = [{ method = "screenshot", args = { variant = "wide" } }]
+
+[commands.mouse.tunnel_vision]
+triggers = ["tunnel vision", "tunnel"]
+description = "Toggle tunnel vision mode (darken screen except around gaze)"
+actions = [{ method = "mouse_tunnel_vision" }]
+
+[commands.mouse.snap]
+triggers = ["snap"]
+description = "Snap mouse to current eye tracking position"
+actions = [{ method = "mouse_snap" }]
+
+[commands.mouse.jump]
+triggers = ["jump"]
+description = "Jump mouse to eye position with quick snap"
+actions = [{ method = "mouse_jump" }]
+
+[commands.mouse.nudge]
+triggers = ["nudge follow"]
+description = "Fine-tune mouse position with nudge movement"
+actions = [{ method = "mouse_nudge" }]
+
+[commands.mouse.quick_follow]
+triggers = ["quick follow"]
+description = "Enable quick-jump eye tracking follow mode"
+actions = [{ method = "mouse_quick_follow" }]
+
+[commands.mouse.smooth_follow]
+triggers = ["smooth follow"]
+description = "Enable smooth nudge-based eye tracking"
+actions = [{ method = "mouse_smooth_follow" }]
+
+[commands.mouse.follow]
+triggers = ["follow"]
+description = "Enable snap-based eye tracking follow mode"
+actions = [{ method = "mouse_follow" }]
+
+[commands.mouse.focus]
+triggers = ["focus", "touch"]
+description = "Move to ghost position and click (only in ghost mode)"
+actions = [{ method = "mouse_move_click" }]
+
+[commands.mouse.double_click]
+triggers = ["double click", "double"]
+description = "Double left mouse click"
+actions = [{ method = "mouse_double_click" }]
+
+[commands.mouse.right_click]
+triggers = ["right click", "secondary click"]
+description = "Right mouse click (context menu)"
+actions = [{ method = "mouse_right_click" }]
+
+[commands.mouse.select_click]
+triggers = ["select click"]
+description = "Shift+click for extending selection"
+actions = [{ method = "mouse_select_click" }]
+
+[commands.mouse.command_click]
+triggers = ["command click"]
+description = "Cmd+click (open in new tab, multi-select)"
+actions = [{ method = "mouse_command_click" }]
+
+[commands.mouse.scroll_left]
+triggers = ["scroll left"]
+description = "Scroll horizontally to the left"
+multiplier = true
+actions = [{ method = "mouse_scroll_left" }]
+
+[commands.mouse.scroll_right]
+triggers = ["scroll right"]
+description = "Scroll horizontally to the right"
+multiplier = true
+actions = [{ method = "mouse_scroll_right" }]
+
+[commands.mouse.scroll_up_bit]
+triggers = ["scroll up a bit"]
+description = "Scroll up by a small amount"
+actions = [{ method = "mouse_scroll_up_bit" }]
+
+[commands.mouse.scroll_up]
+triggers = ["scroll up"]
+description = "Scroll up (say 'scroll up 3' for more)"
+multiplier = true
+actions = [{ method = "mouse_scroll_up" }]
+
+[commands.mouse.scroll_down_bit]
+triggers = ["scroll down a bit"]
+description = "Scroll down by a small amount"
+actions = [{ method = "mouse_scroll_down_bit" }]
+
+[commands.mouse.scroll_down]
+triggers = ["scroll down"]
+description = "Scroll down (say 'scroll down 3' for more)"
+multiplier = true
+actions = [{ method = "mouse_scroll_down" }]
+
+[commands.mouse.jump_up]
+triggers = ["jump up"]
+description = "Instant scroll up, no animation (say 'jump up 3' for more)"
+multiplier = true
+actions = [{ method = "mouse_jump_up" }]
+
+[commands.mouse.jump_down]
+triggers = ["jump down"]
+description = "Instant scroll down, no animation (say 'jump down 3' for more)"
+multiplier = true
+actions = [{ method = "mouse_jump_down" }]
+
+[commands.mouse.scroll_to_bottom]
+triggers = ["scroll to bottom"]
+description = "Scroll to bottom of page/document"
+actions = [{ method = "mouse_scroll_to_bottom" }]
+
+[commands.mouse.scroll_to_top]
+triggers = ["scroll to top"]
+description = "Scroll to top of page/document"
+actions = [{ method = "mouse_scroll_to_top" }]
+
+[commands.mouse.scroll]
+triggers = ["scroll"]
+description = "Start continuous scrolling down"
+actions = [{ method = "mouse_scroll_continuous" }]
+
+[commands.mouse.reverse_scroll]
+triggers = ["reverse scroll"]
+description = "Start continuous scrolling up"
+actions = [{ method = "mouse_reverse_scroll" }]
+
+[commands.mouse.scroll_fast]
+triggers = ["scroll fast"]
+description = "Start fast continuous scrolling down"
+actions = [{ method = "mouse_scroll_fast" }]
+
+[commands.mouse.reverse_scroll_fast]
+triggers = ["reverse scroll fast"]
+description = "Start fast continuous scrolling up"
+actions = [{ method = "mouse_reverse_scroll_fast" }]
+
+[commands.mouse.nudge_left]
+triggers = ["nudge left"]
+description = "Move mouse left by nudge distance"
+multiplier = true
+actions = [{ method = "mouse_nudge_left" }]
+
+[commands.mouse.nudge_right]
+triggers = ["nudge right"]
+description = "Move mouse right by nudge distance"
+multiplier = true
+actions = [{ method = "mouse_nudge_right" }]
+
+[commands.mouse.nudge_up]
+triggers = ["nudge up"]
+description = "Move mouse up by nudge distance"
+multiplier = true
+actions = [{ method = "mouse_nudge_up" }]
+
+[commands.mouse.nudge_down]
+triggers = ["nudge down"]
+description = "Move mouse down by nudge distance"
+multiplier = true
+actions = [{ method = "mouse_nudge_down" }]
+
+[commands.mouse.increase_nudge]
+triggers = ["increase nudge"]
+description = "Increase the nudge movement distance"
+multiplier = true
+actions = [{ method = "mouse_increase_nudge" }]
+
+[commands.mouse.decrease_nudge]
+triggers = ["decrease nudge"]
+description = "Decrease the nudge movement distance"
+multiplier = true
+actions = [{ method = "mouse_decrease_nudge" }]
+
+[commands.mouse.mouse]
+triggers = ["mouse"]
+description = "Enter interactive mouse mode"
+actions = [{ method = "mouse_interactive" }]
+
+[commands.mouse.mouse_down]
+triggers = ["mouse down", "hold"]
+description = "Hold left mouse button down"
+actions = [
+  { method = "mouse_click" },
+  { method = "mouse_down" },
+]
+
+[commands.mouse.mouse_up]
+triggers = ["mouse up", "release"]
+description = "Release left mouse button"
+actions = [{ method = "mouse_up" }]
+
+[commands.mouse.drag]
+triggers = ["drag"]
+description = "Drag to eye position (only active when mouse is held down)"
+states = ["mouse_down"]
+actions = [{ method = "mouse_move" }]

@@ -1,0 +1,87 @@
+[settings]
+default_execution = "robotgo"
+# Set to true if your macOS has "Natural scrolling" enabled (System Preferences > Mouse/Trackpad)
+# This inverts the scroll direction to match your system settings
+natural_scrolling = true
+# Order of categories as displayed in the UI - categories not listed here won't appear
+category_order = [
+    "system",
+    "mouse",
+    "text",
+    "coding",
+    "ai",
+    "agent",
+    "git",
+    "ide",
+    "flutter",
+    "desktop",
+    "mac",
+    "workspace",
+    "magnet",
+    "symbols",
+    "phone",
+]
+# Size of the region for background OCR scanning (width and height in logical pixels)
+ocr_region_size = 600
+# Size of the region for OCR command fallback when no command matches (default 300)
+ocr_region_size_command_fallback = 200
+# Screenshot dimensions (width x height in logical pixels)
+screenshot_width = 600
+screenshot_height = 600
+screenshot_tall_width = 400
+screenshot_tall_height = 800
+screenshot_wide_width = 800
+screenshot_wide_height = 400
+# Sensitivity multipliers for companion app input (1.0 = default, 2.5 = 2.5x faster)
+companion_scroll_sensitivity = 1.5
+companion_mouse_sensitivity = 2.0
+# Minimum distance (in pixels) for three-finger fling to trigger space/mission control
+companion_fling_distance = 50
+
+# --- Streaming voice ---
+# Evaluate commands while speech is still in progress: chains like
+# "up down down left right" fire on the fly, and unmatched speech
+# accumulates in a live dictation buffer committed with "insert"
+# ("take" copies, "reject" discards, "scratch that" removes the last bit).
+streaming_asr = true
+# How often (ms) to re-transcribe the in-progress utterance
+streaming_tick_ms = 350
+# Stop mid-utterance transcription beyond this many seconds
+streaming_max_seconds = 12
+# Ticks a word must survive unchanged before commands act on it
+# (higher = safer against misfires, slower chains)
+stream_stability_ticks = 2
+# Prose utterances at most this many words still get fuzzy/OCR command salvage
+prose_salvage_max_tokens = 2
+# Accumulate unmatched speech in the dictation buffer (false = old behavior:
+# unmatched speech is an error)
+dictation_enabled = true
+# Re-transcribe dictation finals (prose + control words) with the accurate
+# model before they enter the buffer; ticks and command chains stay fast.
+# Costs ~1-2s between finishing an utterance and it committing to the panel.
+dictation_accurate_finals = true
+# Re-transcribe finals that fire trailer commands (click/move/select/scan/
+# type ...) with the accurate model — the trailer feeds screen matching,
+# where a fast-model mishearing acts on the wrong thing. Plain command
+# chains ("up up down") stay on the fast model.
+command_accurate_finals = true
+# Silence (ms) that ends an utterance while the dictation buffer has text.
+# Commands end after 500ms; dictating waits longer so natural pauses don't
+# split sentences into fragments whisper reads without context. The first
+# utterance of a dictation still ends at 500ms (the buffer is empty then).
+# "replay that" re-reads the whole buffer's audio as one clip regardless.
+dictation_break_ms = 1200
+
+# --- Scan server (screend) ---
+# Route "scan <word>" through the standalone screend server (Apple Vision
+# OCR, prewarmed at utterance start; falls back to the local Tesseract path
+# whenever the server is down). Build it with `make screend`; the run script
+# launches it automatically when built.
+scan_server_enabled = true
+#scan_server_url = "http://localhost:51013"
+# Query the accessibility (AXUIElement) tree of the frontmost app before OCR
+# for click/move/select/scan: millisecond answers with exact clickable bounds
+# where apps expose real AX trees; OCR still answers whatever AX can't see.
+# Requires Accessibility permission for whatever launches screend — verify
+# with `curl -s localhost:51013/healthz` showing "ax_trusted": true.
+ax_enabled = true

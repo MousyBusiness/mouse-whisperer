@@ -1,0 +1,19 @@
+*.bin
+models/*
+build/*
+
+# desktop screenshots + OCR ground truth captured from the local machine
+internal/screend/vision/testdata/detect_corpus/
+
+# repo-local runtime dir (screend.log etc, created by ./run)
+/tmp/
+
+.idea/
+
+# per-machine build options, e.g. DISABLE = voice eye
+mk/local.mk
+
+# personal voice commands, loaded with the rest of config/
+config/local.toml
+
+.DS_Store
